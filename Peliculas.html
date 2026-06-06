@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.cdnfonts.com/css/hummus" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/ambulane" rel="stylesheet"> 
+    <link rel="stylesheet" href="Styles.css">
+    <title>Dulce Margarita Guerrero Yado</title>
+</head>
+<body>
+    
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            
+            <li class="dropdown">
+                <a href="#">Proyecto 1 ▼</a>
+                <div class="dropdown-content">
+                    <a href="Pokedex.html">Pokémon</a>
+                </div>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#">Proyecto 2 ▼</a>
+                <div class="dropdown-content">
+                    <a href="Peliculas.html">Películas</a>
+                </div>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#">Proyecto 3 ▼</a>
+                <div class="dropdown-content">
+                    <a href="TrabajoChido.html">Trabajo chido :D</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="Container">
+        <h1>Pagina de Peliculas</h1>
+        <h3>Dulce Margarita Guerrero Yado</h3>
+
+        <form id="form">
+            <input type="text" id="search" placeholder="Busca una película..."/>
+            <input type="submit" value="Buscar"/>     
+        </form>
+
+        <section id="main" class="movies"></section>
+    </div>
+
+    <script>
+        const API_URL = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3fd2be6f0c70a2a598f084ddfb75487c&page=1';
+        const IMG_PATH = 'https://image.tmdb.org/t/p/w1280';
+        const SEARCH_API = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query=';
+
+        const main = document.getElementById('main');
+        const form = document.getElementById('form');
+        const search = document.getElementById('search');
+
+        // Cargar películas populares al inicio
+        getMovies(API_URL);
+
+        async function getMovies(url) {
+            const res = await fetch(url);
+            const data = await res.json();
+            showMovies(data.results);
+        }
+
+        function showMovies(movies) {
+            main.innerHTML = '';
+            
+            movies.forEach(movie => {
+                const { title, poster_path, vote_average, overview } = movie;
+                
+                const movieEl = document.createElement('div');
+                movieEl.classList.add('movie');
+                
+                movieEl.innerHTML = `
+                    <img src="${IMG_PATH}${poster_path}" alt="${title}">
+                    <div class="movie-info">
+                        <h3>${title}</h3>
+                        <span class="${getClassByRate(vote_average)}">${vote_average.toFixed(1)}</span>
+                    </div>
+                    <div class="overview">
+                        <h3>Resumen</h3>
+                        <p>${overview}</p>
+                    </div>
+                `;
+                main.appendChild(movieEl);
+            });
+        }
+
+        function getClassByRate(vote) {
+            if (vote >= 8) return 'green';
+            if (vote >= 6) return 'orange';
+            return 'red';
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const searchTerm = search.value.trim();
+            
+            if (searchTerm) {
+                getMovies(SEARCH_API + searchTerm);
+            } else {
+                getMovies(API_URL);
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.cdnfonts.com/css/hummus" rel="stylesheet">
+    <title>Dulce Margarita Guerrero Yado - Mi Proyecto</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0c0c0c;
+            color: #ffdddd;
+            font-family: 'Hummus', sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .title {
+            font-size: 5.5rem;
+            color: #ff3333;
+            text-shadow: 6px 6px 0 #000,
+                        -4px -4px 0 #000,
+                        4px -4px 0 #000,
+                        -4px 4px 0 #000;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            color: #ff9999;
+            margin-bottom: 8px;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background-color: #1f0000;
+            border: 3px solid #8b0000;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .navbar a.brand {
+            color: #ffaaaa;
+            text-decoration: none;
+            font-size: 1.3rem;
+            margin-right: 16px;
+            white-space: nowrap;
+        }
+
+        .navbar a.brand:hover { color: #ff4d4d; }
+
+        .nav-items {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* ── DROPDOWN ── */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown > a {
+            color: #ffaaaa;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 8px 14px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color .2s, background .2s;
+        }
+
+        .dropdown > a:hover {
+            color: #ff4d4d;
+            background: rgba(139, 0, 0, 0.3);
+        }
+
+        .caret {
+            font-size: .65em;
+            display: inline-block;
+            transition: transform .25s ease;
+        }
+
+        .dropdown:hover .caret {
+            transform: rotate(180deg);
+        }
+
+        /* Menú desplegable */
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            background: #1a0000;
+            border: 2px solid #8b0000;
+            border-radius: 10px;
+            min-width: 170px;
+            overflow: hidden;
+            z-index: 100;
+
+            /* Estado inicial: invisible y desplazado */
+            opacity: 0;
+            transform: translateY(-10px) scaleY(0.9);
+            transform-origin: top center;
+            pointer-events: none;
+
+            /* Animación suave */
+            transition: opacity .22s ease, transform .22s ease;
+        }
+
+        /* Cuando el mouse está sobre el dropdown, mostrar menú */
+        .dropdown:hover .dropdown-menu,
+        .dropdown:focus-within .dropdown-menu {
+            opacity: 1;
+            transform: translateY(0) scaleY(1);
+            pointer-events: all;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 18px;
+            color: #ffbbbb;
+            text-decoration: none;
+            font-size: 1rem;
+            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+            transition: background .18s, color .18s, padding-left .2s;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(139, 0, 0, 0.4);
+            color: #ff4d4d;
+            padding-left: 26px;
+        }
+
+        /* ── GRID DE PROYECTOS ── */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background-color: #1a0000;
+            border: 4px solid #8b0000;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.6);
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-bottom: 4px solid #8b0000;
+        }
+
+        .project-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .project-info h3 {
+            font-size: 1.6rem;
+            color: #ff6666;
+            margin-bottom: 8px;
+        }
+
+        .project-info p {
+            color: #ffbbbb;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Encabezado estilo póster -->
+        <div class="header">
+            <h1 class="title">MOSTRAR - MIS PROYECTOS</h1>
+            <p class="subtitle">Vista de lo que he hecho</p>
+        </div>
+
+        <!-- Navegación -->
+       <nav class="navbar">
+            <a class="brand" href="Index.html">Inicio</a>
+
+            <div class="nav-items">
+
+                <div class="dropdown">
+                    <a href="#">Unidad 1 <span class="caret">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="RegistroPersonaje.html">Registro Personaje</a>
+                        <a href="RegistroCreepypasta.html">Registro Creepypasta</a>
+                        <a href="Cine.html">Cine</a>
+                        <a href="TablaFinal.html">Tabla Final</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#">Unidad 2 - parte 1 <span class="caret">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="AgregarSospechoso.html">Agregar Sospechoso</a>
+                        <a href="dashboard.html">Dashabord</a>
+                        <a href="ListaCasos.html">Lista Sospechosos</a>
+                    </div>
+                </div>
+                
+                <div class="dropdown">
+                    <a href="#">Unidad 2 - parte 2 <span class="caret">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="AgregarCaso.html">Anime</a>
+                        <a href="Cards.html">Tarjetas</a>
+                        <a href="From.html">Listas</a>
+                    </div>
+                </div>               
+
+                <div class="dropdown">
+                    <a href="#">Unidad 3 <span class="caret">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="Pokedex.html">Pokémon</a>
+                        <a href="Peliculas.html">Películas</a>
+                        <a href="TrabajoChido.html">Trabajo chido :D</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Grid de Proyectos -->
+        <div class="projects-grid">
+
+            <!-- Proyecto 1: Pokémon -->
+            <div class="project-card">
+                <img src="Pichu.gif" alt="Pokemon">
+                <div class="project-info">
+                    <h3>POKÉDEX</h3>
+                    <p>Proyecto 1</p>
+                </div>
+            </div>
+
+            <!-- Proyecto 2: Películas -->
+            <div class="project-card">
+                <img src="Mejor.jpg" alt="Peliculas">
+                <div class="project-info">
+                    <h3>PELÍCULAS</h3>
+                    <p>Proyecto 2</p>
+                </div>
+            </div>
+
+            <!-- Proyecto 3 -->
+            <div class="project-card">
+                <img src="Zelda.jpg" alt="Trabajo Chido">
+                <div class="project-info">
+                    <h3>TRABAJO CHIDO</h3>
+                    <p>Proyecto 3</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

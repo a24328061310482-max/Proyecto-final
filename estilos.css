@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0a0a0a;
+    color: #ffdddd;
+    font-family: 'Hummus', sans-serif;
+    min-height: 100vh;
+    background-image: linear-gradient(rgba(10,0,0,0.95), rgba(20,0,0,0.95));
+    padding-bottom: 50px;
+}
+
+/* ==================== NAVEGACIÓN ==================== */
+.navbar {
+    background-color: #1a0000;
+    border-bottom: 4px solid #8b0000;
+    padding: 15px 0;
+    margin-bottom: 30px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.navbar a {
+    color: #ffaaaa;
+    text-decoration: none;
+    font-size: 1.4rem;
+    padding: 10px 18px;
+    transition: all 0.3s;
+}
+
+.navbar a:hover {
+    color: #ff4d4d;
+    text-shadow: 0 0 15px #ff0000;
+}
+
+/* ==================== TÍTULO ==================== */
+h1 {
+    text-align: center;
+    font-size: 3.8rem;
+    color: #ff3333;
+    margin: 20px 0 30px 0;
+    text-shadow: 5px 5px 0 #000,
+                -4px -4px 0 #000,
+                4px -4px 0 #000,
+                -4px 4px 0 #000;
+    letter-spacing: 4px;
+}
+
+/* ==================== IMÁGENES ==================== */
+img {
+    display: block;
+    margin: 0 auto;
+    border: 4px solid #8b0000;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(139, 0, 0, 0.7);
+}
+
+#pokeImg {
+    margin-top: 20px;
+    width: 280px;
+    height: 280px;
+    object-fit: contain;
+    background-color: #1a0000;
+}
+
+/* ==================== INPUT ==================== */
+.placeholder {
+    display: block;
+    margin: 20px auto;
+    width: 300px;
+    padding: 15px;
+    font-size: 1.3rem;
+    background-color: #1f0000;
+    border: 3px solid #8b0000;
+    color: #ffdddd;
+    font-family: 'Hummus', sans-serif;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.placeholder::placeholder {
+    color: #aa5555;
+}
+
+/* ==================== INFORMACIÓN POKÉMON ==================== */
+.pokeimg1 {
+    background-color: #1a0000;
+    border: 3px solid #8b0000;
+    border-radius: 8px;
+    padding: 8px 15px;
+    margin: 8px 0;
+    width: 320px;
+    color: #ffdddd;
+    font-size: 1.1rem;
+    box-shadow: 0 0 12px rgba(139, 0, 0, 0.5);
+}
+
+/* ==================== BOTÓN ==================== */
+.button {
+    display: block;
+    margin: 30px auto;
+    padding: 15px 40px;
+    font-size: 1.4rem;
+    background-color: #a4161a;
+    color: white;
+    border: 4px solid #8b0000;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Humble 4', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+}
+
+.button:hover {
+    background-color: #ff3333;
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 51, 51, 0.8);
+}
+
+/* ==================== GRÁFICA ==================== */
+.grafica {
+    width: 450px;
+    margin: 40px auto;
+    background-color: #1a0000;
+    padding: 20px;
+    border: 4px solid #8b0000;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(139, 0, 0, 0.6);
+}
+
+/* ==================== EFECTOS EXTRA ==================== */
+.pokeimg1:hover {
+    background-color: #2a0000;
+    border-color: #ff6666;
+}
+
+h1, .pokeimg1 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}

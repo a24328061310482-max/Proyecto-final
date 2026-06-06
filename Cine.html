@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cine 2.0 - Dulce Margarita Guerrero Yado</title>
+<link href="https://fonts.cdnfonts.com/css/hummus" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Hummus', sans-serif;
+    background: linear-gradient(135deg, #000000, #1a0000);
+    color: #ffdddd;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 3rem;
+    color: #ff3333;
+    letter-spacing: 6px;
+    text-shadow: 4px 4px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+    margin-bottom: 8px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 1.4rem;
+    color: #ff9999;
+    letter-spacing: 3px;
+    margin-bottom: 36px;
+}
+
+/* ── NAVBAR ── */
+.navbar { background-color: #1f0000; border: 3px solid #8b0000; padding: 12px 20px; border-radius: 12px; margin-bottom: 50px; display: flex; align-items: center; gap: 10px; box-shadow: 0 0 20px rgba(139,0,0,0.6); }
+.navbar a.brand { color: #ffaaaa; text-decoration: none; font-size: 1.3rem; margin-right: 16px; }
+.navbar a.brand:hover { color: #ff4d4d; }
+.nav-items { display: flex; gap: 4px; }
+.dropdown { position: relative; }
+.dropdown > a { color: #ffaaaa; text-decoration: none; font-size: 1.1rem; padding: 8px 14px; border-radius: 8px; display: flex; align-items: center; gap: 6px; transition: color .2s, background .2s; }
+.dropdown > a:hover { color: #ff4d4d; background: rgba(139,0,0,0.3); }
+.caret { font-size: .65em; display: inline-block; transition: transform .25s ease; }
+.dropdown:hover .caret { transform: rotate(180deg); }
+.dropdown-menu { position: absolute; top: calc(100% + 8px); left: 0; background: #1a0000; border: 2px solid #8b0000; border-radius: 10px; min-width: 170px; overflow: hidden; z-index: 100; opacity: 0; transform: translateY(-10px) scaleY(0.9); transform-origin: top center; pointer-events: none; transition: opacity .22s ease, transform .22s ease; box-shadow: 0 8px 24px rgba(139,0,0,0.5); }
+.dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu { opacity: 1; transform: translateY(0) scaleY(1); pointer-events: all; }
+.dropdown-menu a { display: block; padding: 10px 18px; color: #ffbbbb; text-decoration: none; font-size: 1rem; border-bottom: 1px solid rgba(139,0,0,0.3); transition: background .18s, color .18s, padding-left .2s; }
+.dropdown-menu a:last-child { border-bottom: none; }
+.dropdown-menu a:hover { background: rgba(139,0,0,0.4); color: #ff4d4d; padding-left: 26px; }
+
+/* ── TABLA ── */
+.table-container {
+    width: 95%;
+    margin: 0 auto;
+    background: #1a0000;
+    border: 3px solid #8b0000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 24px rgba(139,0,0,0.5);
+    overflow-x: auto;
+}
+
+table { width: 100%; border-collapse: collapse; }
+
+th {
+    background-color: #8b0000;
+    color: #ffdddd;
+    padding: 14px 16px;
+    text-transform: uppercase;
+    text-align: left;
+    letter-spacing: 2px;
+    font-size: .9rem;
+    border-bottom: 2px solid #ff3333;
+}
+
+td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #330000;
+    color: #ffbbbb;
+    font-size: .95rem;
+}
+
+tbody tr:last-child td { border-bottom: none; }
+tr:hover td { background-color: #260000; color: #ffdddd; transition: background .2s, color .2s; }
+</style>
+</head>
+<body>
+
+       <nav class="navbar">
+            <a class="brand" href="file:///D:/tablas/trabajo%20final/index.html">Inicio</a>
+
+            <div class="nav-items">
+
+                <div class="dropdown">
+                    <a href="#">Unidad 1 <span class="caret">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="file:///D:/tablas/trabajo%20final/RegistroPersonaje.html">Registro Personaje</a>
+                        <a href="file:///D:/tablas/trabajo%20final/RegistroCreepypasta.html">Registro Creepypasta</a>
+                        <a href="file:///D:/tablas/trabajo%20final/Cine.html">Cine</a>
+                        <a href="file:///D:/tablas/trabajo%20final/TablaFinal.html">Tabla Final</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="#">Unidad 2 - parte 1 <span class="caret">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="file:///D:/tablas/trabajo%20final/AgregarSospechoso.html">Agregar Sospechoso</a>
+                        <a href="file:///D:/tablas/trabajo%20final/dashboard.html">Dashabord</a>
+                        <a href="file:///D:/tablas/trabajo%20final/ListaSospechosos.html">Lista Sospechosos</a>
+                    </div>
+                </div>
+                
+                <div class="dropdown">
+                    <a href="#">Unidad 2 - parte 2 <span class="caret">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="file:///D:/tablas/trabajo%20final/Anime.html">Anime</a>
+                        <a href="file:///D:/tablas/trabajo%20final/Cards.html">Tarjetas</a>
+                        <a href="file:///D:/tablas/trabajo%20final/From.html">Listas</a>
+                    </div>
+                </div>               
+
+                <div class="dropdown">
+                    <a href="#">Unidad 3 <span class="caret">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="file:///D:/tablas/pokemon/Pokedex.html">Pokémon</a>
+                        <a href="file:///D:/tablas/Peliculas/Peliculas.html">Películas</a>
+                        <a href="file:///D:/tablas/trabajo%20final/TrabajoChido.html">Trabajo chido :D</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+<h1>Cine 2.0</h1>
+<h2>Listado de Películas y Elenco</h2>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Año</th>
+                <th>Director</th>
+                <th>Actores</th>
+                <th>Personajes</th>
+            </tr>
+        </thead>
+        <tbody id="tablaCuerpo">
+            <!-- Los datos se insertan desde JS -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+// Datos de maqueta — reemplazar con fetch al servidor cuando haya BD
+const peliculas = [
+    { id: 1, titulo: "El Conjuro",        anio: 2013, director: "James Wan",        actores: "Vera Farmiga, Patrick Wilson",  personajes: "Lorraine Warren, Ed Warren" },
+    { id: 2, titulo: "It",                anio: 2017, director: "Andy Muschietti",   actores: "Bill Skarsgård, Jaeden Martell", personajes: "Pennywise, Bill Denbrough"  },
+    { id: 3, titulo: "Hereditary",        anio: 2018, director: "Ari Aster",         actores: "Toni Collette, Alex Wolff",     personajes: "Annie Graham, Peter Graham" },
+    { id: 4, titulo: "Midsommar",         anio: 2019, director: "Ari Aster",         actores: "Florence Pugh, Jack Reynor",    personajes: "Dani, Christian"           },
+    { id: 5, titulo: "The Black Phone",   anio: 2021, director: "Scott Derrickson",  actores: "Ethan Hawke, Mason Thames",     personajes: "The Grabber, Finney"       },
+];
+
+const tbody = document.getElementById('tablaCuerpo');
+
+if (peliculas.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No se encontraron registros.</td></tr>`;
+} else {
+    peliculas.forEach(p => {
+        tbody.innerHTML += `
+        <tr>
+            <td>${p.id}</td>
+            <td>${p.titulo}</td>
+            <td>${p.anio}</td>
+            <td>${p.director}</td>
+            <td>${p.actores}</td>
+            <td>${p.personajes}</td>
+        </tr>`;
+    });
+}
+</script>
+</body>
+</html>

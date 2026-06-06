@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.cdnfonts.com/css/hummus" rel="stylesheet">
+    <title>The Legend Of-Zelda - Dulce Margarita Guerrero Yado</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #0f0a0a; color: #ffdddd; font-family: 'Hummus', sans-serif; min-height: 100vh; }
+
+        .navbar { background-color: #1a0000; border-bottom: 4px solid #8b0000; padding: 15px 0; text-align: center; }
+        .navbar ul { list-style:none; display:flex; justify-content:center; gap:40px; flex-wrap:wrap; }
+        .navbar a { color:#ffaaaa; text-decoration:none; font-size:1.3rem; padding:10px 20px; }
+        .navbar a:hover { color:#ff5555; }
+
+        .title { text-align:center; font-size:4.5rem; color:#ff3333; margin:40px 0 10px 0; text-shadow:0 0 15px #ff0000; }
+        .subtitle { text-align:center; font-size:1.8rem; color:#ff9999; margin-bottom:30px; }
+
+        .search-container { text-align:center; margin-bottom:20px; }
+        .search-container input { padding:12px 18px; width:400px; max-width:75%; background:#1f0a0a; border:2px solid #8b0000; color:white; font-size:1.1rem; border-radius:8px; font-family:'Hummus',sans-serif; }
+        .search-container input::placeholder { color:#aa6666; }
+        .search-container button { padding:12px 28px; background:#8b0000; color:white; border:none; font-size:1.1rem; border-radius:8px; cursor:pointer; margin-left:10px; font-family:'Hummus',sans-serif; transition:background .2s; }
+        .search-container button:hover { background:#ff3333; }
+
+        .categorias { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:30px; padding:0 20px; }
+        .cat-btn { padding:8px 20px; border:2px solid #8b0000; border-radius:20px; background:transparent; color:#ffaaaa; font-size:1rem; cursor:pointer; font-family:'Hummus',sans-serif; transition:all .2s; }
+        .cat-btn:hover { background:#8b0000; color:#fff; }
+        .cat-btn.active { background:#ff3333; border-color:#ff3333; color:#fff; }
+
+        /* ── GRID ── */
+        .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; padding:0 30px; max-width:1400px; margin:0 auto; }
+
+        /* ── CARD estilo película ── */
+        .card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 2/3;
+            background: #1a0000;
+            border: 2px solid #8b0000;
+            transition: transform .3s, box-shadow .3s;
+        }
+        .card:hover { transform: scale(1.04); box-shadow: 0 8px 30px rgba(180,0,0,0.5); }
+
+        /* imagen ocupa todo */
+        .card img, .card .sin-imagen {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .card .sin-imagen {
+            background: linear-gradient(135deg,#1a0000,#2a0808,#1a0000);
+            display: flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;
+        }
+        .card .sin-imagen .escudo { font-size:3.5rem; opacity:0.35; }
+        .card .sin-imagen .nombre-ph { color:#aa4444; font-size:1rem; text-align:center; padding:0 14px; opacity:0.8; }
+
+        /* degradado inferior */
+        .card .overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 40px 12px 14px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.92));
+        }
+        .card .overlay .nombre {
+            color: #ffdddd;
+            font-size: 1rem;
+            font-family: 'Hummus', sans-serif;
+            margin-bottom: 8px;
+            text-shadow: 0 1px 4px #000;
+        }
+        .card .overlay .acciones {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .card .overlay .badge {
+            background: #8b0000;
+            color: #fff;
+            font-size: .7rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        .card .overlay .btn-resumen {
+            background: transparent;
+            border: none;
+            color: #ff9999;
+            font-family: 'Hummus', sans-serif;
+            font-size: .85rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 0;
+        }
+        .card .overlay .btn-resumen:hover { color: #ff3333; }
+
+        /* ── MODAL resumen ── */
+        .modal-bg {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-bg.open { display: flex; }
+        .modal {
+            background: #1a0000;
+            border: 3px solid #8b0000;
+            border-radius: 14px;
+            max-width: 480px;
+            width: 90%;
+            padding: 28px;
+            position: relative;
+            text-align: center;
+        }
+        .modal img { width:100%; max-height:260px; object-fit:cover; border-radius:8px; margin-bottom:16px; }
+        .modal h2 { color:#ff3333; font-size:1.5rem; margin-bottom:10px; }
+        .modal p { color:#ffbbbb; font-size:.95rem; line-height:1.6; }
+        .modal .cerrar {
+            position: absolute; top:12px; right:14px;
+            background: none; border: none;
+            color: #ff9999; font-size:1.5rem; cursor: pointer;
+        }
+        .modal .cerrar:hover { color:#ff3333; }
+
+        .msg { text-align:center; grid-column:1/-1; color:#ff9999; font-size:1.4rem; padding:50px 0; }
+
+        .paginacion { display:flex; justify-content:center; align-items:center; gap:12px; margin:30px 0 50px; flex-wrap:wrap; }
+        .paginacion button { padding:10px 22px; background:#8b0000; color:white; border:none; border-radius:8px; font-size:1rem; cursor:pointer; font-family:'Hummus',sans-serif; transition:background .2s; }
+        .paginacion button:hover { background:#ff3333; }
+        .paginacion button:disabled { background:#3a0000; color:#aa5555; cursor:not-allowed; }
+        .paginacion span { color:#ff9999; font-size:.95rem; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="Pokedex.html">Proyecto 1 - Pokémon</a></li>
+        <li><a href="Peliculas.html">Proyecto 2 - Películas</a></li>
+        <li><a href="Mostrar.html">Proyecto 3 - Mostrar Proyectos</a></li>
+    </ul>
+</nav>
+
+<h1 class="title">THE LEGEND OF ZELDA</h1>
+<p class="subtitle">DULCE MARGARITA GUERRERO YADO</p>
+
+<div class="search-container">
+    <input type="text" id="busqueda" placeholder="Busca un nombre..."
+           onkeydown="if(event.key==='Enter') buscar()">
+    <button onclick="buscar()">Buscar</button>
+</div>
+
+<div class="categorias" id="categorias"></div>
+<div id="resultado" class="card-grid"></div>
+<div class="paginacion" id="paginacion"></div>
+
+<!-- Modal resumen -->
+<div class="modal-bg" id="modalBg" onclick="cerrarModal(event)">
+    <div class="modal" id="modal">
+        <button class="cerrar" onclick="cerrarModal()">✕</button>
+        <img id="modalImg" src="" alt="">
+        <h2 id="modalNombre"></h2>
+        <p id="modalDesc"></p>
+    </div>
+</div>
+
+<script>
+const IMAGENES = {
+    //PERSONAJES
+    "leop": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTtrzsnWbCKtIelpHSHgG8ojJggWJ_PRRhog&s",
+    "ledd": "https://yukharyan.com/wp-content/uploads/2025/11/personajes-hyrule-warriors-golem.jpg",
+    "queen ambi":   "https://triforcewiki.s3.us-east-va.io.cloud.ovh.us/c/c6/Veran_OoA_artwork.jpg",
+    "quince":   "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/7/73/BotW_Quince_Model.png/revision/latest/thumbnail/width/360/height/450?cb=20170409215042",
+    "juannelle":    "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/2/20/BotW_Juannelle_Model.png/revision/latest/thumbnail/width/360/height/450?cb=20170320204002",
+    "jovani":   "https://static.wikia.nocookie.net/zelda/images/f/fe/Giovanni_TP.png/revision/latest?cb=20130204175539&path-prefix=es",
+    "june": "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/6/67/TMC_June_Sprite.png/revision/latest?cb=20200703204925&format=original",
+    "joel": "https://static.wikia.nocookie.net/zelda/images/2/20/Joel_%28The_Wind_Waker%29.png/revision/latest?cb=20091105105910",
+    "joe":  "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/6/60/ST_Joe_Model.png/revision/latest?cb=20151029041934",
+    "sarstorytelleria": "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/3/3b/Ancient_Hero%27s_Aspect.png/revision/latest/smart/width/386/height/259?cb=20230611165930",
+    "stamm":    "https://static.wikia.nocookie.net/zelda/images/f/fa/Breath_of_the_Wild_Traveling_Merchants_Chef_Stamm_%28Tarrey_Town_-_Akkala_Highlands%29.png/revision/latest?cb=20170820202048",
+    "lattie":   "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/a/a1/LANS_Lattie_Model.png/revision/latest/scale-to-width/360?cb=20200211041644",
+    "false zelda":  "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/7/7f/SSBB_False_Zelda.png/revision/latest?cb=20180928165121",
+    "fledge":   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7Ws_1g9McnjcVceghpW92InV1GcDy5Afnrw&s",
+    "gonguron": "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/2/25/PH_Gongoron_Model.png/revision/latest/scale-to-width/360?cb=20151201054442",
+    "flurris":  "https://static.wikia.nocookie.net/zelda/images/0/0e/Ancient_Robot.png/revision/latest/smart/width/386/height/259?cb=20111112145558",
+    "strata":   "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/6/6b/TMC_Strato_Sprite.png/revision/latest?cb=20190715201048&format=original",
+    "majiyo":   "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/3/31/Majiyo%27s_Catepillar.png/revision/latest/scale-to-width-down/250?cb=20160113052407",
+    //MOUNTROS
+    "ghost": "https://static.wikia.nocookie.net/zelda/images/d/db/Poe_Artwork_%28Ocarina_of_Time%29.png/revision/latest?cb=20090521084413",
+    "mushroom men": "https://oyster.ignimgs.com/mediawiki/apis.ign.com/the-legend-of-zelda-breath-of-the-wild-2/1/14/Stamella_Shroom_Zelda_TotK_Tears_of_the_Kingdom.png?width=640",
+    "molgera larva": "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/8/84/TWW_Molgera%2C_Protector_of_the_Seal_Figurine_Model.png/revision/latest?cb=20110712222645",
+    "moldworm": "https://static.wikia.nocookie.net/zelda/images/6/61/Moldorm_%28Twilight_Princess%29.png/revision/latest?cb=20091212225128",
+    "zol": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSb9pS_7O2a3xtbdZuN7D-QEeeTFvu4ZKrBe6JkckaCA&s",
+    "zant": "https://static.wikia.nocookie.net/zelda/images/1/1f/Zant.png/revision/latest?cb=20110128151034&path-prefix=es",
+    "shadow deku baba": "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/3/38/TP_Shadow_Deku_Baba_Model.png/revision/latest/scale-to-width/360?cb=20100306033142",
+    "sentrobe": "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/b/bb/SS_Sentrobe_Model.png/revision/latest/scale-to-width/360?cb=20210703062523",
+    "sea monster": "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/5/51/Seamonster.png/revision/latest?cb=20170424180226&format=original",
+    "sandworm": "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/b/be/PH_Sandworm_Model.png/revision/latest?cb=20151114210740",
+    "geldarm": "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/0/0b/TAoL_Geldarm_Artwork.png/revision/latest?cb=20211030225310",
+    "frost pebblit": "https://cdn.wikimg.net/en/zeldawiki/images/thumb/5/5e/TotK_Frost_Talus_Model.png/313px-TotK_Frost_Talus_Model.png",
+    "freezor": "https://static.wikia.nocookie.net/zelda/images/a/a3/Freezor_ALBW.png/revision/latest/thumbnail/width/360/height/360?cb=20131221094514&path-prefix=es",
+    "moblin": "https://static.wikia.nocookie.net/zelda/images/e/ef/Spear_Moblin_%28Ocarina_of_Time%29.png/revision/latest?cb=20090324215003",
+    "mimic mole": "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/c/c5/MimicZA.png/revision/latest/thumbnail/width/360/height/450?cb=20170228230418",
+    "medusa": "https://static.wikia.nocookie.net/zelda/images/2/2b/Bari_OoT.png/revision/latest?cb=20121113181119&path-prefix=es",
+    "malice naydra": "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/0/0f/BotW_Malice_Naydra_Concept_Art.png/revision/latest/scale-to-width-down/250?cb=20210129051327",
+    "magmanos": "https://static.wikia.nocookie.net/zelda/images/d/de/Magmanos.png/revision/latest/thumbnail/width/360/height/360?cb=20120413222755&path-prefix=es",
+    "yellow zol": "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/b/bd/ALttP_Yellow_Zol_Sprite.png/revision/latest/thumbnail/width/360/height/450?cb=20111015140836",
+    "big skulltula": "https://static.wikia.nocookie.net/zelda/images/b/b7/Gran_Skulltula_OoT.png/revision/latest?cb=20160926215610&path-prefix=es",
+    "dark fi":  "https://static.wikia.nocookie.net/zelda_gamepedia_en/images/f/fc/HWDE_Dark_Fi_Icon.png/revision/latest/scale-to-width/360?cb=20220919173952",
+    //JEFES
+    "ganon":    "https://images.wikidexcdn.net/mwuploads/esssbwiki/thumb/2/27/latest/20200127024043/Ganon_TLoZ_Ocarina_of_Time.png/800px-Ganon_TLoZ_Ocarina_of_Time.png",
+    //OBJETOS
+    "fire rod": "https://upload.wikimedia.org/wikipedia/en/a/ab/Zelda-Purah.png",
+    //LUGARES
+};
+
+function obtenerImagen(nombre) {
+    if (!nombre) return null;
+    const clave = nombre.toLowerCase();
+    if (IMAGENES[clave]) return IMAGENES[clave];
+    for (const [key, url] of Object.entries(IMAGENES)) {
+        if (clave.includes(key) || key.includes(clave)) return url;
+    }
+    return null;
+}
+
+function levenshtein(a, b) {
+    const m = a.length, n = b.length;
+    const dp = Array.from({length:m+1}, (_,i) => Array.from({length:n+1}, (_,j) => i===0?j:j===0?i:0));
+    for (let i=1;i<=m;i++) for (let j=1;j<=n;j++)
+        dp[i][j] = a[i-1]===b[j-1] ? dp[i-1][j-1] : 1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+    return dp[m][n];
+}
+
+const BASE_URL = 'https://zelda.fanapis.com/api';
+const CATEGORIAS = [
+    { key: 'characters', label: 'Personajes' },
+    { key: 'monsters',   label: 'Monstruos'   },
+    { key: 'bosses',     label: 'Jefes'        },
+    { key: 'items',      label: 'Objetos'      },
+    { key: 'places',     label: 'Lugares'      },
+];
+
+let categoriaActual = 'characters';
+let todosLosItems   = [];
+let paginaActual    = 1;
+let queryActual     = '';
+const POR_PAGINA    = 20;
+
+// Botones categoría
+const contenedorCats = document.getElementById('categorias');
+CATEGORIAS.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className   = 'cat-btn' + (cat.key === categoriaActual ? ' active' : '');
+    btn.textContent = cat.label;
+    btn.onclick = () => {
+        categoriaActual = cat.key; paginaActual = 1; queryActual = ''; todosLosItems = [];
+        document.getElementById('busqueda').value = '';
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        cargar();
+    };
+    contenedorCats.appendChild(btn);
+});
+
+async function traerTodos() {
+    let pagina = 1, todos = [];
+    while (true) {
+        const resp  = await fetch(`${BASE_URL}/${categoriaActual}?limit=100&page=${pagina}`);
+        if (!resp.ok) break;
+        const data  = await resp.json();
+        const items = data.data || [];
+        todos = todos.concat(items);
+        if (items.length < 100) break;
+        pagina++;
+    }
+    return todos;
+}
+
+async function cargar() {
+    const grid = document.getElementById('resultado');
+    const pag  = document.getElementById('paginacion');
+    grid.innerHTML = `<p class="msg">Cargando datos de Hyrule...</p>`;
+    pag.innerHTML  = '';
+    try {
+        if (todosLosItems.length === 0) todosLosItems = await traerTodos();
+        const filtrados = queryActual
+            ? todosLosItems.filter(i => {
+                if (!i.name) return false;
+                const n = i.name.toLowerCase(), q = queryActual.toLowerCase();
+                return n.includes(q) || levenshtein(n,q)<=2 || n.split(' ').some(p=>levenshtein(p,q)<=2);
+            })
+            : todosLosItems;
+
+        if (!todosLosItems.length) {
+            grid.innerHTML = `<p class="msg">Esta categoría no tiene datos disponibles en la API.</p>`;
+            return;
+        }
+        if (!filtrados.length) {
+            grid.innerHTML = `<p class="msg">No se encontró "<em>${queryActual}</em>"</p>`;
+            return;
+        }
+        const inicio = (paginaActual-1)*POR_PAGINA;
+        grid.innerHTML = filtrados.slice(inicio, inicio+POR_PAGINA).map(item => crearCard(item)).join('');
+        renderizarPaginacion(filtrados.length);
+    } catch(e) {
+        grid.innerHTML = `<p class="msg">Error al conectar con la API de Zelda.</p>`;
+    }
+}
+
+function crearCard(item) {
+    const labelCat = CATEGORIAS.find(c=>c.key===categoriaActual)?.label ?? '';
+    const imagen   = obtenerImagen(item.name);
+    const nombre   = (item.name ?? 'Sin nombre').replace(/'/g,"&#39;").replace(/"/g,"&quot;");
+    const desc     = (item.description || item.comment || 'Sin descripción disponible').replace(/'/g,"&#39;").replace(/"/g,"&quot;");
+
+    const imgParte = imagen
+        ? `<img src="${imagen}" alt="${nombre}" onerror="this.outerHTML='<div class=\\'sin-imagen\\'><span class=\\'escudo\\'>🛡️</span><span class=\\'nombre-ph\\'>${nombre}</span></div>'">`
+        : `<div class="sin-imagen"><span class="escudo">🛡️</span><span class="nombre-ph">${nombre}</span></div>`;
+
+    return `
+    <div class="card">
+        ${imgParte}
+        <div class="overlay">
+            <div class="nombre">${nombre}</div>
+            <div class="acciones">
+                <span class="badge">${labelCat}</span>
+                <button class="btn-resumen" onclick="abrirModal('${nombre}','${imagen||''}','${desc}')">Resumen</button>
+            </div>
+        </div>
+    </div>`;
+}
+
+function abrirModal(nombre, imagen, desc) {
+    document.getElementById('modalNombre').textContent = nombre;
+    document.getElementById('modalDesc').textContent   = desc;
+    const img = document.getElementById('modalImg');
+    if (imagen) { img.src = imagen; img.style.display='block'; }
+    else img.style.display = 'none';
+    document.getElementById('modalBg').classList.add('open');
+}
+
+function cerrarModal(e) {
+    if (!e || e.target === document.getElementById('modalBg')) {
+        document.getElementById('modalBg').classList.remove('open');
+    }
+}
+
+function renderizarPaginacion(total) {
+    const pag = document.getElementById('paginacion');
+    const totalPags = Math.ceil(total/POR_PAGINA);
+    if (totalPags <= 1) return;
+    const btnPrev = document.createElement('button');
+    btnPrev.textContent='← Anterior'; btnPrev.disabled=paginaActual===1;
+    btnPrev.onclick=()=>{paginaActual--;cargar();window.scrollTo(0,0);};
+    const info = document.createElement('span');
+    info.textContent=`Página ${paginaActual} de ${totalPags} (${total} resultados)`;
+    const btnNext = document.createElement('button');
+    btnNext.textContent='Siguiente →'; btnNext.disabled=paginaActual===totalPags;
+    btnNext.onclick=()=>{paginaActual++;cargar();window.scrollTo(0,0);};
+    pag.append(btnPrev, info, btnNext);
+}
+
+function buscar() {
+    queryActual=document.getElementById('busqueda').value.trim();
+    paginaActual=1; cargar();
+}
+
+cargar();
+</script>
+</body>
+</html>
